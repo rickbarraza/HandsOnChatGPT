@@ -1,3 +1,180 @@
-body {
-   background-color: papayawhip;
-}
+
+* {
+   margin: 0;
+   padding: 0;
+   border: 0;
+ }
+
+html {
+   overflow: hidden;
+   overscroll-behavior: none;
+   height: 100%;
+ }
+ 
+ body {
+   font-family: 'Arvo', serif;
+   font-size: 1.2em;
+   font-weight: 200;
+   display: flex;
+   height: 100%;
+   background: linear-gradient(235.8deg, #BD6267 8.23%, #5B4C97 81.65%) fixed;
+   flex-direction: column;
+   align-content: center;
+   justify-content: flex-start;
+   align-items: center;
+   overflow: auto;
+ }
+
+ #imgHeader {
+   padding-top: 50px;
+   width: 400px;
+   filter: drop-shadow(-7px 13px 12px rgba(112, 87, 183, 0.66)) drop-shadow(10px 12px 5px rgba(92, 73, 116, 0.8));
+ }
+ 
+ #form {
+   position: sticky;
+   bottom: 0px;
+   backdrop-filter: blur(10px);
+   display: flex;
+   align-items: center;
+   padding: 30px;
+   border-top: 1px solid #FFFFFF66;
+   width: 95%;
+   justify-content: center;
+ }
+ 
+ #prompt {
+   font-size: 24px;
+   height: 100px;
+   box-sizing: border-box;
+   width: 920px;  
+   background: white;
+   box-shadow: 8px 8px 8px rgba(81, 64, 103, 0.2), 6px 6px 12px 4px rgba(116, 88, 73, 0.22);
+   border-radius: 100px;
+   padding: 10px;
+   padding-left: 30px;
+   padding-right: 100px;
+   resize: none;
+ }
+ 
+ .round-button {
+   width: 80px;
+   height: 80px;
+   background: linear-gradient(5.8deg, #ef99ad 8.23%, #0ccadfe3 101.65%);
+   border-radius: 50%;
+   border: none;
+   margin-left: -90px;
+   cursor: pointer;
+ }
+ 
+ .round-button i {
+   font-size: 24px;
+ }
+ 
+ .round-button:hover {
+   background: linear-gradient(5.8deg, #ef99ad 8.23%, #0ccadfe3 101.65%);
+   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+ }
+
+ #response {
+   align-items: center;
+   display: flex;
+   flex-direction: column;
+   gap: 20px;
+   max-width: 1200px;
+ }
+ 
+ .avatar {
+   width: 140px;
+   height: 140px;
+   position: relative;
+   top: 0px;
+   left: -100px;
+ }
+ 
+ .responseFromHarfang {
+   box-sizing: border-box;
+   width: 860px;
+   background: linear-gradient(178.26deg, #C5C0A922 1.37%, #8F6F8622 98.43%);
+   border: 3px solid rgba(255, 255, 255, 0.4);
+   box-shadow: 8px 8px 8px rgba(81, 64, 103, 0.2), 6px 6px 12px 4px rgba(116, 88, 73, 0.22);
+   border-radius: 35px;
+   padding: 30px 50px 30px 0px;
+   display: flex;
+   margin-left: -100px;
+ }
+ 
+ .bubbleBody {
+   font-size: 24px;
+   color: #FFF;
+   margin-left: -60px;
+   width: 100%;
+   align-self: center;
+   line-height: 1.4em;
+   word-spacing: .03em;
+   letter-spacing: 0.02em;
+ }
+ 
+ .promptFromUser {
+   box-sizing: border-box;
+   width: 860px;  
+   background: linear-gradient(183.91deg, #f3f8fa -0.23%, #ACC8D5 103.47%);
+   border: 1px solid rgba(255, 255, 255, 0.4);
+   box-shadow: 8px 8px 8px rgba(81, 64, 103, 0.2), 6px 6px 12px 4px rgba(116, 88, 73, 0.22);
+   border-radius: 35px;
+   padding: 30px 50px 30px 0px;
+   display: flex;
+   margin-left: 100px;
+ }
+ 
+ .promptFromUser .avatar {
+   left: unset;
+   right: -100%;
+ }
+ .promptFromUser .bubbleBody {
+   color: #2e2e2e;
+ }
+
+ #worldsFrame {
+   margin-top: 50px;
+   display: flex;
+   flex-direction: column;
+   gap: 50px;
+   align-items: center;
+   align-items: center;
+   height: 140px;
+ }
+ 
+ #worldTitle {
+   font-size: 24px;
+   color: #FFF;
+ }
+ 
+ #imgHolder {
+   height: 120px;
+   align-items: center;
+   display: flex;
+   gap: 30px;
+ }
+ 
+ #worldsFrame img {
+   width: 80px;
+   cursor: pointer;
+   transition: all 0.2s ease-out;
+   -webkit-user-drag: none;
+   filter: drop-shadow(-7px 13px 12px rgba(112, 87, 183, 0.66)) drop-shadow(10px 12px 5px rgba(92, 73, 116, 0.8));
+ }
+ 
+ #worldsFrame img:hover {
+   width: 100px;
+   filter: drop-shadow(-7px 13px 12px rgba(112, 87, 183, 0.66)) drop-shadow(16px 42px 5px rgba(92, 73, 116, 0.6));
+ }
+ #storyTitle {
+   font-size: 60px;
+   font-weight: bold;
+   color: #FFF;
+   height: 36px;
+   top: 0px;
+   margin: 40px;
+   text-align: center;
+ }

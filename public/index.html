@@ -1,23 +1,76 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>OpenAI GPT-3 Demo</title>
+    <title>Mr. Harfang's Worlds of Wonder</title>
+    <link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
+    <script>
+
+      let allStories = [];
+
+      // Make sure the story's title is the first sentence in your system's story prompt.
+      let story1 = `The Mushroom Kingdom. You are a wise and mysterious storyteller named Mr. Harfang. 
+      You are the game master for an interactive role playing game for my 12 year old son named Nathan.
+      This fantasy story is called "The Mushroom Kingdom" and begins with Nathan waking up in the backyard and is only an inch tall.
+      The Mushroom Kingdom need his help to defeat the Fire Ant Army that is invading their world.
+      Nathan is ready to begin. Introduce yourself and start the campaign now.`;
+      allStories.push(story1);
+
+
+      let story2 =  `The Adventures of BK. You are a wise and mysterious storyteller named Mr. Harfang. 
+      You are the game master for an interactive role playing game for my 12 year old son named Nathan.
+      This science fiction adventure story is called "The Adventures of BK" and begins with a mysterious
+      explosion at a top secret labratory. BK looks like a metal bolt and is 2 inches tall. He has become
+      self aware after the explosion and also has the power of magnetism. He wakes up in the forrest outside
+      the labratory. He needs to get back into the lab and stop the evil AI that caused the explosion from taking
+      over the world. Nathan is ready to begin. Introduce yourself and start the campaign now.`;
+      allStories.push(story2);
+
+
+      let story3 = `Squishy Expansion. You are a wise and mysterious storyteller named Mr. Harfang.
+      You are the game master for an interactive role playing game for my 12 year old son named Nathan. This fantasy
+      story is about a race of small 5 inch squishy creatures called the "squishies". they live on earth but are invisable
+      to humans. they are peacful and love expanding whatever civilization they live in. There are multiple civilizations
+      that have sqishies living in them. they build trading outposts, and lookouts to keep an eye out for danger.
+      They are an agracultural society and love to grow food. they are also very curious and love to explore.
+      In this world Nathan is a squishy and is the leader of one of 6 different unique civilizations. He is trying to 
+      expand his civilization but is running into problems. Introduce yourself and start the campaign now.`;  
+      allStories.push(story3);
+
+   </script>
   </head>
   <body>
-    <h1>OpenAI GPT-3 Demo</h1>
-    <form id="form">
-      <label for="prompt">Enter your prompt:</label><br>
-      <input type="text" id="prompt" name="prompt"><br><br>
-      <input type="submit" value="Submit">
-    </form>
+    <img id="imgHeader" src="/images/headerLogo.png" alt="headerLogo">
+    <div id="worldsFrame">
+      <div id="imgHolder" height="200px">
+      </div>
+   </div>
+   <p id="worldTitle">Select your world...</p>
+   <h2 id="storyTitle"></h2>
     <div id="response"></div>
+    <div id="form">
+      <textarea maxlength="200" row="3" type="text" id="prompt" name="prompt" placeholder="What say you?"></textarea>
+      <button id="btnSend" class="round-button">
+        <svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve">
+          <style type="text/css">.st0{fill:none;stroke:#FFF;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}</style>
+          <circle class="st0" cx="16" cy="16" r="13"/>
+          <line class="st0" x1="16" y1="23" x2="16" y2="10"/>
+          <polyline class="st0" points="12,14 16,10 20,14 "/>
+        </svg>
+      </button>
+  </div>
     <script>
       const form = document.querySelector('#form');
       const responseDiv = document.querySelector('#response');
-      form.addEventListener('submit', async (event) => {
+      const btnSend = document.querySelector('#btnSend');
+
+      btnSend.addEventListener('click', async (event) => {
         event.preventDefault();
         const prompt = document.querySelector('#prompt').value;
+
+        addResponse(prompt, false);  
+        document.querySelector('#prompt').value = '';  
+
         const res = await fetch('/api/gpt', {
           method: 'POST',
           headers: {
@@ -27,8 +80,80 @@
         });
         console.log("calling to server...")
         const data = await res.json();
-        responseDiv.textContent = data.message;
+        addResponse(data.message, true);
       });
-    </script>
+
+      function addResponse(_message, _isHarfang) {
+        
+        const newDiv = document.createElement('div');
+        var avatar = document.createElement('img');
+        
+        if (_isHarfang) {
+          newDiv.classList.add('responseFromHarfang');
+          avatar.src = "/images/bubbleHarfang.png";
+        } else {
+          newDiv.classList.add('promptFromUser');
+          avatar.src = "/images/bubbleUser.png";
+        }
+        avatar.classList.add('avatar');
+        newDiv.appendChild(avatar);
+        var txtBody = document.createElement("p");
+        txtBody.innerHTML = _message;
+        txtBody.classList.add('bubbleBody');
+        newDiv.appendChild(txtBody);
+
+        responseDiv.appendChild(newDiv); 
+
+				document.body.scrollTop = document.body.scrollHeight;       
+      }    
+      
+      let systemPrompt = allStories[0];
+      let worldTitle = document.getElementById('worldTitle');
+
+      function setupWorlds() {
+
+        for ( var i = 0; i < allStories.length; i++ ) {
+          var story = allStories[i];
+          var firstSentence = story.split(".")[0];
+          var imgStory = document.createElement('img');
+          imgStory.setAttribute('data-title', firstSentence);
+          imgStory.setAttribute('data-id', i);
+          imgStory.src = "/images/ico.png";
+          imgStory.alt = "world icon";
+          // add a hover eventListener
+          imgStory.addEventListener('mouseover', function() {
+            worldTitle.innerHTML = this.getAttribute('data-title');
+          });
+          // add a hover exit eventListener
+          imgStory.addEventListener('mouseout', function() {
+            worldTitle.innerHTML = "Select your world...";
+          });
+          imgStory.addEventListener('click', function() {
+            systemPrompt = allStories[this.getAttribute('data-id')];
+            startWorld();
+          });
+          document.getElementById('imgHolder').appendChild(imgStory);
+        }
+      }
+
+      async function startWorld() {
+        responseDiv.innerHTML = '';
+        const res = await fetch('/api/startWorld', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ systemPrompt })
+        });
+        console.log(res);
+        const data = await res.json();
+        addResponse(data.message, true);
+      }
+
+      setupWorlds();
+      
+      
+      
+      </script>
   </body>
 </html>

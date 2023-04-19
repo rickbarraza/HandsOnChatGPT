@@ -1,12 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
+
 
 app.use(bodyParser.json());
 app.use(express.static('public'));
@@ -37,6 +39,13 @@ app.post('/api/gpt', async (req, res) => {
   res.send({ message: reply });
 });
 
+app.post('/api/startWorld', async (req, res) => {
+  messages.length = 0;
+  addMessage('system', req.body.systemPrompt);
+  reply = await sendToOpenAI();
+  addMessage("assistant", reply);
+  res.send({ message: reply });
+});
 
 app.listen(3000, () => {
   console.log('Server listening on port 3000');
