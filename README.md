@@ -1,8 +1,11 @@
-![readme header image](/imgs_readme/01header.jpg)
-
-Greetings MSFTies from our AI Design Day talk this morning (April 19, 2023). here is a step by step breakdown of what we demo’d today, creative coding (exploratory engineering) with ChatGPT from scratch. This code is in no way complete, and you are totally free to FORK it, add your own key, and use it as a template for whatever you want to make. Go break some eggs!
+## Hands on with ChatGPT & GitHub Codespaces
 
 ![cover slide](/imgs_readme/02cover.jpg)
+
+Greetings MSFTies from our AI Design Day talk this morning (April 19, 2023). here is a step by step breakdown of what we demo’d today - creative coding & exploratory engineering with ChatGPT APIs from scratch using vanilla JS, HTML & CSS. This code is in no way complete, but represents the initial steps I went through to get a sketch setup and start tinkering with an idea. The idea we will stand up is to build a ChatGPT interactive story engine for my son. Let's go break some eggs!
+
+![readme header image](/imgs_readme/01header.jpg)
+
 
 ![creative coding landscape](/imgs_readme/03creativecoding.jpg)
 
