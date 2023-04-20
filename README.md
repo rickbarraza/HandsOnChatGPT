@@ -176,6 +176,8 @@ Let's stop and really look at the OpenAI code that BingChat generated for us and
 Here is the updated index.js code, with the OpenAI sections rewritten and made a bit more robust. If you know your way around JavaScript a bit, compare this code with what was generated, to get a sense for what has changeed and why. But if not, no worries. We'll loop back later and do a bit more updates before we're done.
 
 
+##INDEX.JS
+
 ```
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -239,16 +241,16 @@ It should start up your server, open a little window in the bottom right saying 
 You should find the starter template all up and running with the ability to round trip your project.
 
 
-# The minimum workable project
+## The minimum workable project
 
-Although I am still going to walk through the PROJECT I want to build with this, if you just want to get the minimum viable project setup with HTML,CSS and a node server running JavaScript - you can grab a copy and go do your own thing. In THIS repo, you can find the above code
-In this current Rep
-
-In THIS repo, you will find two sets of 
+Although I am still going to walk through the PROJECT I want to build with this, if you just want to get the minimum viable project setup with HTML,CSS and a node server running JavaScript - you have everything you need above to get you up and running. If that's all you need, take it and take care. Love to know what you do with it!
 
 
-go ahead and click it
+# THE FUN PART
 
+Now that I got a basic skeleton setup and was able to test our Client to Server to OpenAI code is all working, I can turn this into the original demo we were intending. Here are the highlights from the talk today. I'll call out any of the important bits but won't rehash the low level steps. The video should be on internal with the other talks.
+
+I wanted to make an interactive storyteller for my son. Growing up, we would use the amazing Mouse Guard Roleplaying Game to create safe spaces of conflict and resolution and the power of story to help my kids work through any challenges they were going through. Plus, it was super fun during family game nights too. 
 
 ![RPG inspiration](/imgs_readme/08rpg.jpg)
 
