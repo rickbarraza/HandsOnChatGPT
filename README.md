@@ -14,16 +14,54 @@ This is where GitHub's new CODESPACES completely changes the game. CODESPACES is
 
 ## Setting up our Codespace with OpenAI
 
-Enough chatting, let's start making. We are going to use Codespaces to create a NODE.JS server that serves up an HTML/CSS page that will be an interactive, ChatGPT based RPG storyteller. Here's the problem, I think of myself as a passionate amateur at best, and tinker with too many languages to remember any of their idiosyncrasies to code flawlessly off the top of my head. 
+Enough chatting, let's start making. We are going to use Codespaces to create a NODE.JS server that serves up an HTML/CSS page that will be an interactive, ChatGPT based RPG storyteller. Let's fire up your first Codespace (this project assumes you have a GitHub account, and also have an OpenAI access code for chatGPT or GPT4). See the GitHub header there? Click CODESPACES and it will take you to this screen below. We're going to use the default, *BLANK* template. It comes preconfigured with loads of needed goodies and boots up quickly.
+
+![fire up your codespace](/imgs_readme/05initialprompt.jpg)
+
+We'll create all our files here. But how to start?
+
+Here's the problem, I think of myself as a passionate amateur at best, and tinker with too many languages to remember any of their idiosyncrasies to code flawlessly off the top of my head. 
 
 So let's go full Inception, and I'm going to use ChatGPT to help me create a ChatGPT experience to help other creative coders learn ChatGPT. I open up Edge, go to Bing Chat, and type in this prompt:
 
 
-![initial prompt](/imgs_readme/05initialprompt.jpg)
+![initial prompt](/imgs_readme/setupCodespace.jpg)
 
+and here is the code it gave me. Create a file called index.js and copy this in.
 
+```
+const express = require('express');
+const bodyParser = require('body-parser');
+const OpenAI = require('openai');
 
+const app = express();
+const openai = new OpenAI(process.env.OPENAI_API_KEY);
 
+app.use(bodyParser.json());
+app.use(express.static('public'));
+
+let conversationHistory = [];
+
+app.post('/api/gpt', async (req, res) => {
+  conversationHistory.push(req.body.prompt);
+  const prompt = conversationHistory.join('\n');
+  const response = await openai.complete({
+    engine: 'davinci',
+    prompt,
+    maxTokens: 150,
+    temperature: 0.9,
+    n: 1,
+    stop: null
+  });
+  const message = response.data.choices[0].text;
+  conversationHistory.push(message);
+  res.json({ message });
+});
+
+app.listen(3000, () => {
+  console.log('Server listening on port 3000');
+});
+```
 
 ![prompting for client](/imgs_readme/06promptclient.jpg)
 
