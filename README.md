@@ -16,7 +16,7 @@ This is where GitHub's new CODESPACES completely changes the game. CODESPACES is
 
 Enough chatting, let's start making. We are going to use Codespaces to create a NODE.JS server that serves up an HTML/CSS page that will be an interactive, ChatGPT based RPG storyteller. Let's fire up your first Codespace (this project assumes you have a GitHub account, and also have an OpenAI access code for chatGPT or GPT4). See the GitHub header there? Click CODESPACES and it will take you to this screen below. We're going to use the default, *BLANK* template. It comes preconfigured with loads of needed goodies and boots up quickly.
 
-![fire up your codespace](/imgs_readme/05initialprompt.jpg)
+![initial prompt](/imgs_readme/setupCodespace.png)
 
 We'll create all our files here. But how to start?
 
@@ -24,8 +24,7 @@ Here's the problem, I think of myself as a passionate amateur at best, and tinke
 
 So let's go full Inception, and I'm going to use ChatGPT to help me create a ChatGPT experience to help other creative coders learn ChatGPT. I open up Edge, go to Bing Chat, and type in this prompt:
 
-
-![initial prompt](/imgs_readme/setupCodespace.png)
+![fire up your codespace](/imgs_readme/05initialprompt.jpg)
 
 and here is the code it gave me. Create a file called index.js and copy this in.
 
