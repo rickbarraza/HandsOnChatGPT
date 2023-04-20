@@ -122,7 +122,9 @@ In your Codespace / Visual Studio Code work environment, open the VS Code termin
 $ node index.js
 ```
 
+
 ### It's not going to work. 
+
 
 It will complain it doesn't have the 'express' module installed. If you look at the index.js code that was generated, you see that it has some dependencies it assumes are already installed, namely 'express' and 'openai'. They're not, so let's install those now:
 
@@ -133,11 +135,120 @@ $ npm install openai --save
 
 That (--save) command is going to create and add these modules into a new *package.json* file that helps other people get your project running on their machines by running an *npm install* command the first time they open your code on their own local or cloud machine.
 
-### If you run it again, it still isn't going to work.
+Try and run it again:
+
+```
+node index.js
+```
+
+### It's still going to work. But we're getting closer.
 
 
+It keeps choking on the getting the 'openai' module running. It is looking for your OpenAI key, it assumes you have it saved as an ENV variable, but we haven't set that up yet. Let's fix that now. Here is what we're going to do. Add this CODESPACE project we've been building from our BLANK Template as an official REPO on our GitHub Account. You can do that directly in the Codespace window by clicking on the source control icon and following the steps. Name the project what you want, make it public or private, but you probably want to UNCHECK the option of saving that "node_modules" folder it created automatically for you when we installed 'express' and 'openai'. By unchecking that option when it asks what you want to Commit to your new repo, it will also automatically create a *.gitignore* file for you to too. It' actually been doing a bit of stuff behind the scenes. 
+
+A small window should pop up in the lower right hand corner when this repo is setup on your GitHub account, asking you to go to GitHub and view it. Click that button to open in a new browser window. You're back at good 'ol GitHub. Here is what we do next. We need to add your OPENAI Access key to this repo and we're going to do that with *GITHUB CODESPACE SECRETS*.
+
+Click on your Profile in the upper right corner of your GitHub window, and go down to Settings. On the Settings page, on the left hand options, click the CODESPACES section. At the top of the SETTINGS > CODESPACES page, you see the option to add your OpenAI key. Create a new secret, the one I'm using is called 'OPENAI_API_KEY'. Once you have have added your OpenAI API KEY as a Codespace secret, you need to add the REPO you just made, and the one we are coding in your Codespace window, to the list of Repos for that Codespace secret. 
+
+The Codespaces Secret will now be let you use your API key securely in any of your future repos you add to it. Here is how our *index.js* page is calling it: 
+
+```
+const openai = new OpenAI(process.env.OPENAI_API_KEY);
+```
+
+Restart your Codespace (or it may notice the change and give you an option to reload it directly), and the above line of code should now be able to run.
+
+Let's try running it one more time:
+
+```
+node index.js
+```
+
+and still no go. But this should be the last time we fail. What's going on?
+
+
+## The OpenAI Code that BingChat Generated Was Wrong
+
+Let's stop and really look at the OpenAI code that BingChat generated for us and we pasted in *index.js*. It's not the most up to date way to call their services. in fact, you'll notice it's not even calling a ChatGPT model, but the original *davinci* model. Let's do an old fashion search and learn and go directly to OpenAI's page on working with Chat.
 
 ![openAI's API page](/imgs_readme/07openai.jpg)
+
+Here is the updated index.js code, with the OpenAI sections rewritten and made a bit more robust. If you know your way around JavaScript a bit, compare this code with what was generated, to get a sense for what has changeed and why. But if not, no worries. We'll loop back later and do a bit more updates before we're done.
+
+
+```
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+
+// NEW OPENAI CODE
+const { Configuration, OpenAIApi } = require("openai");
+
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
+
+
+app.use(bodyParser.json());
+app.use(express.static('public'));
+
+// UPDATE THE app.post('/api/gpt') FUNCTION AND
+// ADD SOME HELPER FUNCTIONS TO STORE ALL THE MESSAGES
+const messages = [];
+
+function addMessage(role, content) {
+   messages.push({ role: role, content: content });
+}
+
+async function sendToOpenAI() {
+  const completion = await openai.createChatCompletion({
+    model: "gpt-3.5-turbo",
+    messages: messages,
+  }).catch((err) => {
+     console.log("error received: " + err);
+  });
+  reply = completion.data.choices[0].message.content;
+  return reply;
+}
+
+app.post('/api/gpt', async (req, res) => {
+  console.log("Received: " + req.body.prompt);
+  addMessage('user', req.body.prompt);
+  reply = await sendToOpenAI();
+  console.log("Reply: " + reply);
+  addMessage("assistant", reply);
+  res.send({ message: reply });
+});
+
+app.listen(3000, () => {
+  console.log('Server listening on port 3000');
+});
+```
+
+## NOW it should work
+
+If you've setup your CODESPACE secret correctly, and have this repo with the updated code shown above launch your project one more time:
+
+```
+$ node index.js
+```
+
+It should start up your server, open a little window in the bottom right saying it is hosting a page (don't worry, although it is a URL on the internet, GitHub is handling the security so it is only private to you right now, and you should go ahead and click on that URL it shows you.
+
+You should find the starter template all up and running with the ability to round trip your project.
+
+
+# The minimum workable project
+
+Although I am still going to walk through the PROJECT I want to build with this, if you just want to get the minimum viable project setup with HTML,CSS and a node server running JavaScript - you can grab a copy and go do your own thing. In THIS repo, you can find the above code
+In this current Rep
+
+In THIS repo, you will find two sets of 
+
+
+go ahead and click it
+
 
 ![RPG inspiration](/imgs_readme/08rpg.jpg)
 
