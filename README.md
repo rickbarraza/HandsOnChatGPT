@@ -25,7 +25,7 @@ Here's the problem, I think of myself as a passionate amateur at best, and tinke
 So let's go full Inception, and I'm going to use ChatGPT to help me create a ChatGPT experience to help other creative coders learn ChatGPT. I open up Edge, go to Bing Chat, and type in this prompt:
 
 
-![initial prompt](/imgs_readme/setupCodespace.jpg)
+![initial prompt](/imgs_readme/setupCodespace.png)
 
 and here is the code it gave me. Create a file called index.js and copy this in.
 
@@ -63,7 +63,79 @@ app.listen(3000, () => {
 });
 ```
 
+The BingChat reply also gives instructions on my project setup. According to it's instructions, create a folder called /public and add an index.html page and styles.css page in the public folder.
+
+What goes into the index.html page? Let's ask ChatGPT again (in the same conversation, so it remembers the index.js server it just recommended...).
+
 ![prompting for client](/imgs_readme/06promptclient.jpg)
+
+And here is the code it generated. Let's just copy and paste that right into the index.html page.
+
+```
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OpenAI GPT-3 Demo</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <h1>OpenAI GPT-3 Demo</h1>
+    <form id="form">
+      <label for="prompt">Enter your prompt:</label><br>
+      <input type="text" id="prompt" name="prompt"><br><br>
+      <input type="submit" value="Submit">
+    </form>
+    <div id="response"></div>
+    <script>
+      const form = document.querySelector('#form');
+      const responseDiv = document.querySelector('#response');
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const prompt = document.querySelector('#prompt').value;
+        const res = await fetch('/api/gpt', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ prompt })
+        });
+        console.log("calling to server...")
+        const data = await res.json();
+        responseDiv.textContent = data.message;
+      });
+    </script>
+  </body>
+</html>
+```
+
+I add some minimal css to the styles.css file too, just to make sure it works.
+
+```
+body {
+   background-color: papayawhip;
+}
+```
+
+In your Codespace / Visual Studio Code work environment, open the VS Code terminal window ( CTRL-`) and try and run it:
+
+```
+$ node index.js
+```
+
+### It's not going to work. 
+
+It will complain it doesn't have the 'express' module installed. If you look at the index.js code that was generated, you see that it has some dependencies it assumes are already installed, namely 'express' and 'openai'. They're not, so let's install those now:
+
+```
+$ npm install express --save
+$ npm install openai --save
+```
+
+That (--save) command is going to create and add these modules into a new *package.json* file that helps other people get your project running on their machines by running an *npm install* command the first time they open your code on their own local or cloud machine.
+
+### If you run it again, it still isn't going to work.
+
+
 
 ![openAI's API page](/imgs_readme/07openai.jpg)
 
