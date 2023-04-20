@@ -250,23 +250,45 @@ Although I am still going to walk through the PROJECT I want to build with this,
 
 Now that I got a basic skeleton setup and was able to test our Client to Server to OpenAI code is all working, I can turn this into the original demo we were intending. Here are the highlights from the talk today. I'll call out any of the important bits but won't rehash the low level steps. The video should be on internal with the other talks.
 
-I wanted to make an interactive storyteller for my son. Growing up, we would use the amazing Mouse Guard Roleplaying Game to create safe spaces of conflict and resolution and the power of story to help my kids work through any challenges they were going through. Plus, it was super fun during family game nights too. 
+I wanted to make an interactive storyteller for my son. Growing up, we would use the amazing Mouse Guard Roleplaying Game to create safe spaces of conflict and resolution and the power of story to help my kids work through any challenges they were going through. Plus, it was super fun during family game nights too. Since then, our family's worlds of make believe and crafting tend to revolve around tiny creatures made of wood and stone and felt and hot glue. Each summer tends to bring a new world building exercise, but the world of tiny creatures fighting big odds in the natural world always seems to be a central theme. So we'll use this as our world building inspiration.
 
 ![RPG inspiration](/imgs_readme/08rpg.jpg)
 
+Now, for the AI personality. A couple years back, when we still had our Ethics & Society group, I created the "Mr Harfang" persona to explore some metaverse / Web3 shenanigans. The persona stuck around and I setup this current GitHub account under the name. Since I plan on no longer using it after this summer, I decided to repurpose the name as the personality of the AI we'll describe. Here was the original Mr Harfang sketches:
+
 ![the original Mr. Harfang](/imgs_readme/09harfang.jpg)
+
+While I would usually prefer an img2img solution, like from Stable Diffusion or Midjourney, I wanted to keep this all OpenAI powered technologies for our demo. I fired up Bing Image Creator and added a verbal prompt for the image I was thinking of. You can see the results. The Harfang (french for snow owl) I liked most didn't have the glasses I wanted. The owl with glasses didn't have the right face. But I don't need the AI to do the finished art for me, this is a good place to start. I fire up Photoshop.
 
 ![Bing image creator](/imgs_readme/10imgcreator.jpg)
 
+And land on the general look and mood I want for the experience.
+
 ![Finding the app look](/imgs_readme/11appbrand.jpg)
+
+With that, I fire up Figma and start playing around with what I want the App to look like. Maybe something like...
 
 ![comping in figma](/imgs_readme/12figma.jpg)
 
-![first generation prompts](/imgs_readme/13oldschoolprompt.jpg)
+You can find the final css in the public/styles.css file and the index.html has the index.html client showing the finished project (for now).
 
-![modern prompt conversations](/imgs_readme/14newschool.jpg)
+
+## Don't Stop Here
+
+The code is still a bit of a hot mess, but it works for now. Things like sliding the prompt bar up and enabled only after an initial world is selected (doesn't make sense to send a prompt if the conversation and system prompt hasn't defined the world yet...), a user could press the send button multiple times if the response is taking too long, and I'm sure that would break stuff, etc. But that's just regular coding stuff. Let's spend a minute and think more big picture...
+
+Here are some ideas:
 
 ![exploring more possibilities](/imgs_readme/15moreideas.jpg)
 
-![how this applies to enterprise](/imgs_readme/16thinkingenterprise.jpg)
+Eventually, your're going to run out of your token limit. At the same time, wouldn't it be great to use ChatGPT itself to help us here? You can combine a special request to summarize a long sequence of prompts and responses into a concise overview of the main plot points. This summary can be saved to a local cookie, and you can load it up when selecting the matching world, probably as an initial USER prompt informing the system what happened previously on our adventure.
 
+It would be fantastic to also have another conversation in the server that from time to time gets a copy of the scene and hvae another ChatGPT session turn that into a Dall-E2 optimized image prompt. Then send that illustration to the client to add to the conversation. Instant illustrated, interactive story experience.
+
+What would you add to it?
+
+Talke it, make it yours. On the HTML page, notice how the first three worlds are simply defined as text variables. Edit those, delete them, or replace them with your own stories. Each world variable to define and add to the worlds array will be put on the main screen as a world to choose. 
+
+Hope this write up has helped. Check out Codespaces, Creative Coding and more and keep in touch!
+
+Rick
